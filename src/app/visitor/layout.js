@@ -1,7 +1,4 @@
-"use client";
-
-import Navbar from "../shared/navbar";
-import Footer from "../shared/footer";
+// src/app/visitor/layout.js
 
 export default function VisitorLayout({ children }) {
   return (

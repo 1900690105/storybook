@@ -1,7 +1,15 @@
 "use client";
 import { useState } from "react";
+import Navbar from "../../shared/navbar";
+import Footer from "../../shared/footer";
+import Signup from "@/app/auth/signup/page.js";
+// import Signup from "@/app/auth/signup";
+import Login from "@/app/auth/login/page.js";
+
 export default function VisitorLanding() {
-  const [showLogin, setShowLogin] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [modalMode, setModalMode] = useState("choice"); // "choice", "login", or "signup"
+
 
   // cards data
   const previewItems = [
@@ -27,8 +35,13 @@ export default function VisitorLanding() {
 
   return (
     <div>
-       {/* Navbar with login button */}
-      {/* <Navbar onLoginClick={() => setShowLogin(true)} /> */}
+         {/* Navbar with login button */}
+      <Navbar
+        onLoginClick={() => {
+          setShowModal(true);
+          setModalMode("choice");
+        }}
+      />
 
       {/* HERO */}
       <section className="hero">
@@ -44,10 +57,16 @@ export default function VisitorLanding() {
             stories, games, and cultural wisdom.
           </p>
           <div className="cta-group">
-            <button className="cta-primary" onClick={() => setShowLogin(true)}>
+            <button className="cta-primary" onClick={() => {
+              setShowModal(true);
+              setModalMode("signup");
+            }}>
               Sign Up
             </button>
-            <button className="cta-secondary" onClick={() => setShowLogin(true)}>
+            <button className="cta-secondary" onClick={() => {
+              setShowModal(true);
+              setModalMode("choice");
+            }}>
               Explore Demo
             </button>
           </div>
@@ -67,7 +86,10 @@ export default function VisitorLanding() {
 
           {/* Buttons appear only on hover */}
           <div className="btn-group">
-            <button onClick={() => setShowLogin(true)}>Sign Up</button>
+            <button onClick={() => {
+              setShowModal(true);
+              setModalMode("signup");
+            }}>Sign Up</button>
           </div>
         </div>
 
@@ -140,27 +162,72 @@ export default function VisitorLanding() {
   </div>
 </section>
 
-      {/* LOGIN MODAL */}
-      {showLogin && (
-        <div className="modal-overlay">
-          <div className="modal">
-            <h2>🔒 Login Required</h2>
-            <p>Please log in or sign up to access this feature.</p>
-            <div className="modal-buttons">
-              <button className="cta-primary">Login</button>
-              <button className="cta-secondary">Sign Up</button>
-            </div>
+     {/* LOGIN / REGISTER MODAL */}
+   {showModal && (
+  <div className="modal-overlay">
+    <div className={`modal ${modalMode === "login" || modalMode === "signup" ? "large" : ""}`}>
+      {/* Choice screen */}
+      {modalMode === "choice" && (
+        <>
+          <h2>🔒 Welcome to Balkatha</h2>
+          <p>Please choose how you'd like to continue:</p>
+          <div className="modal-buttons">
             <button
-              className="modal-close"
-              onClick={() => setShowLogin(false)}
+              className="cta-primary"
+              onClick={() => setModalMode("signup")}
             >
-              Cancel
+              Sign Up
+            </button>
+            <button
+              className="cta-secondary"
+              onClick={() => setModalMode("login")}
+            >
+              Login
             </button>
           </div>
-        </div>
+           {/* CLOSE button always visible */}
+     <div className="modal-footer">
+  <button
+    className="modal-close"
+    onClick={() => {
+      setShowModal(false);
+    }}
+  >
+    ✖ Close
+  </button>
+</div>
+        </>
       )}
 
-      {/* <Footer /> */}
+      {/* Show Signup form */}
+      {modalMode === "signup" && (
+        <Signup
+          onSwitchToLogin={() => setModalMode("login")}
+          onClose={() => {
+            setShowModal(false);
+            setModalMode("choice");
+          }}
+        />
+      )}
+
+      {/* Show Login form */}
+      {modalMode === "login" && (
+        <Login
+          onSwitchToSignup={() => setModalMode("signup")}
+          onClose={() => {
+            setShowModal(false);
+            setModalMode("choice");
+          }}
+        />
+      )}
+     
+    </div>
+  </div>
+)}
+
+
+
+      <Footer />
     </div>
   );
 }
