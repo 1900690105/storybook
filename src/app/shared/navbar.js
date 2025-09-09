@@ -1,8 +1,11 @@
 "use client";
 import { useEffect, useState } from "react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function Navbar({ onLoginClick }) {
   const [scrolled, setScrolled] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -20,13 +23,20 @@ export default function Navbar({ onLoginClick }) {
     <nav className={`navbar ${scrolled ? "scrolled" : ""}`}>
       <div className="logo">BalKatha</div>
       <ul className="nav-links">
-        <li><a href="#">Home</a></li>
-        <li><a href="#">Stories</a></li>
-        <li><a href="#">Demo</a></li>
-        <li><a href="#">Chat Bot</a></li>
-        <li><a href="#">About</a></li>
+        <li><Link href="/">Home</Link></li>
+        <li><Link href="/shop">Shop</Link></li>
+        <li><Link href="/visitor/about">About</Link></li>
       </ul>
-      <button className="login-btn" onClick={onLoginClick}>
+      <button
+        className="login-btn"
+        onClick={() => {
+          if (typeof onLoginClick === "function") {
+            onLoginClick();
+          } else {
+            router.push("/auth/login");
+          }
+        }}
+      >
         Login
       </button>
 

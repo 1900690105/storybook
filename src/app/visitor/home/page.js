@@ -1,6 +1,5 @@
 "use client";
 import { useState } from "react";
-import Navbar from "../../shared/navbar";
 import Footer from "../../shared/footer";
 import Signup from "@/app/auth/signup/page.js";
 // import Signup from "@/app/auth/signup";
@@ -35,13 +34,7 @@ export default function VisitorLanding() {
 
   return (
     <div>
-         {/* Navbar with login button */}
-      <Navbar
-        onLoginClick={() => {
-          setShowModal(true);
-          setModalMode("choice");
-        }}
-      />
+         {/* Navbar is provided globally via RootLayout */}
 
       {/* HERO */}
       <section className="hero">

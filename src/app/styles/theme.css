@@ -1,0 +1,13 @@
+/* Central theme tokens. Not used yet – import later via globals.css when refactoring. */
+:root {
+  --color-primary: #2e7d32; /* green */
+  --color-primary-2: #388e3c;
+  --color-accent: #0077b6; /* blue accent for contrast */
+  --color-surface-1: #e8f5e9; /* light surface */
+  --color-surface-2: #f1f8e9; /* lighter surface */
+  --color-border: #a5d6a7;
+  --radius-lg: 20px;
+  --radius-md: 14px;
+  --shadow-1: 0 12px 30px rgba(0,0,0,0.12);
+  --shadow-2: 0 18px 40px rgba(0,0,0,0.18);
+}
